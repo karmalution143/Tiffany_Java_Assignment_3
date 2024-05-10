@@ -31,16 +31,21 @@ public class StockUp {
         portfolio.updateStockBalance();
         seedMarket();
 
-        ink.printBalances(portfolio.getNetworth(), portfolio.getCashBalance(), portfolio.getStockBalance());
+        ink.printBalances(portfolio.getNetworth(), 
+            portfolio.getCashBalance(), 
+            portfolio.getStockBalance());
 
         while(!isDone) { // can also say while(isDone == false)
             int choice = validator.selValidation(ink, input, min, max); // pass in the opjects ink, input etc
 
             switch(choice) {
                 case 1: // print Portfolio
-                    ink.printPortfolio(portfolio.getStocks(), portfolio.getNetworth(), portfolio.getCashBalance(), portfolio.getStockBalance());
+                    ink.printPortfolio(portfolio.getStocks());
+                    ink.printBalances(portfolio.getNetworth(), 
+                        portfolio.getCashBalance(), 
+                        portfolio.getStockBalance());
                     break;
-                case 2: // print Market
+                case 2: // buy stock
                     while(!goBack) {
                         ink.printMarket(market.getStocks());
                         int idx = input.nextInt();
@@ -54,8 +59,11 @@ public class StockUp {
                             portfolio.buyStock(stock, qty, purchaseAmount);
                             portfolio.updateStockBalance();
                             portfolio.updateNetworth();
-                            portfolio.addStock(stock);
-                            ink.printPortfolio(portfolio.getStocks(), portfolio.getNetworth(), portfolio.getCashBalance(), portfolio.getStockBalance());
+                            //portfolio.addStock(stock);
+                            ink.printPortfolio(portfolio.getStocks());
+                            ink.printBalances(portfolio.getNetworth(), 
+                            portfolio.getCashBalance(), 
+                            portfolio.getStockBalance());
                             goBack = !goBack;
                         }
                         else {
@@ -65,7 +73,9 @@ public class StockUp {
                     break;
                 case 3: // sell stock
                     while(!goBack) {
-                        ink.printPortfolio(portfolio.getStocks(), portfolio.getNetworth(), portfolio.getCashBalance(), portfolio.getStockBalance());
+                        System.out.println("Choose a stock to sell: \n");
+                        ink.printPortfolio(portfolio.getStocks());
+
                         int idx = input.nextInt();
                         Stock stock = portfolio.getStock(idx - 1);
                         ink.printSellStock(stock);
@@ -75,13 +85,17 @@ public class StockUp {
                         portfolio.getStockBalance();
                         
                         System.out.println("The stock has been sold, you're cash balance has been updated");
-                        ink.printPortfolio(portfolio.getStocks(), portfolio.getNetworth(), portfolio.getCashBalance(), portfolio.getStockBalance());
+                        ink.printBalances(portfolio.getNetworth(), 
+                            portfolio.getCashBalance(), 
+                            portfolio.getStockBalance());
+                        ink.printPortfolio(portfolio.getStocks());
                         goBack = !goBack;
                         }
                         else {
                             System.out.println("Insufficient quantity to sell");
                         }
-                    }
+                    }   
+                    goBack = !goBack;
                     break;
                     
                 case 4: // add funds
@@ -108,7 +122,7 @@ public class StockUp {
             } // switch  
         } // while
          // resets goBack to false, toggling back to main state
-        ink.printGoodday();
+        ink.printGoodbye();
     } // main
 
     public static void seedStocks() {

@@ -72,16 +72,16 @@ public class Portfolio {
     public void buyStock(Stock stock, int qty, double purchaseAmount) {
         // take the purchaseAmount out of our balance
         this.cashBalance -= purchaseAmount;
-        stock.setQty(qty);
-        stocks.add(stock); // appends our new stock
+        stock.setQty(stock.getQty() + qty);
+        //stocks.add(stock); // appends our new stock
         updateStockBalance();
         updateNetworth();
     }
     public void sellStock(Stock stock, int qty) {
         if(qty > 0 && qty <= stock.getQty()) {
             double price = stock.getPrice();
-            double amount = price * qty;
-            this.addFunds(amount);
+            double saleAmount = price * qty;
+            this.addFunds(saleAmount);
             stock.setQty(stock.getQty() - qty);
             if (stock.getQty() == 0) {
                 stocks.remove(stock);

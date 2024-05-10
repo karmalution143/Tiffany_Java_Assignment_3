@@ -12,7 +12,7 @@ public class Ink {
         System.out.println("Welcome to StockUp beta ***\n");
     }
 
-    public void printGoodday() {
+    public void printGoodbye() {
         System.out.println("Richer Every Day!");
     }
 
@@ -29,15 +29,15 @@ public class Ink {
     public void printBuyStock(Stock stock) {
         System.out.printf("Name: %s\nSymbol: %s\nPrice: $%.2f \n",
         stock.getName(), stock.getSymbol(), stock.getPrice());
-        System.out.println("How many units of this stock would you like to buy? \n");
+        System.out.println("\nHow many units of this stock would you like to buy? \n");
     }
     public void printSellStock(Stock stock) {
         System.out.printf("Name: %s\nSymbol: %s\nPrice: $%.2f\n",
         stock.getName(), stock.getSymbol(), stock.getPrice());
-        System.out.println("How many units of this stock would you like to sell?");
+        System.out.println("\nHow many units of this stock would you like to sell?");
     }
 
-    public void printPortfolio(ArrayList<Stock> stocks, double networth, double cashBalance, double stockBalance) {
+    public void printPortfolio(ArrayList<Stock> stocks) {
         for(int i = 0; i < stocks.size(); i++) {
             System.out.printf("(%d) Name: %s Symbol: %s Price: $%.2f Qty: %d\n",
             i + 1,
@@ -46,14 +46,11 @@ public class Ink {
             stocks.get(i).getPrice(),
             stocks.get(i).getQty());
         }
-        System.out.printf("\nNetworth: $%.2f\n", networth);
-        System.out.printf("Bank balance: $%.2f\n", cashBalance);
-        System.out.printf("Stock Value: $%.2f\n", stockBalance);
     } // printPortfolio
 
     public void printMarket(ArrayList<Stock> stocks) {
         for(int i = 0; i < stocks.size(); i++) {
-            System.out.printf("\n(%d) Name %s Symbol: %s Price: $%.2f Qty: %d",
+            System.out.printf("\n(%d) Name %s Symbol: %s Price: $%.2f Qty: %d\n",
             i + 1,
             stocks.get(i).getName(),
             stocks.get(i).getSymbol(),
