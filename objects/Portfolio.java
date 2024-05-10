@@ -9,7 +9,7 @@ public class Portfolio {
     private double cashBalance;
     private double stockBalance;
     private double networth;
-    private double purchaseAmount;
+    //private double purchaseAmount;
     
     // composition
     private ArrayList<Stock> stocks = new ArrayList<>(); //putting one other object inside the class makes it a composition
@@ -33,7 +33,7 @@ public class Portfolio {
         return this.stockBalance;
     }
     public double getNetworth() {
-        return stockBalance() + cashBalance;
+        return calculateStockBalance() + cashBalance;
     }
     public Stock getStock(int idx) {
         return stocks.get(idx);
@@ -48,7 +48,11 @@ public class Portfolio {
     }
     public void addFunds(double amount) {
         if(amount > 0)
-          this.cashBalance += amount;
+            this.cashBalance += amount;
+    }
+    public void withdrawFunds(double amount) {
+        if(amount > 0)
+            this.cashBalance -= amount;
     }
     
     //============>>
@@ -60,7 +64,7 @@ public class Portfolio {
         stocks.remove(stock);
     }
     public void updateStockBalance() {
-        this.stockBalance = stockBalance();
+        this.stockBalance = calculateStockBalance();
     }
     public void updateNetworth() {
         this.networth = getStockBalance() + getCashBalance();
@@ -93,7 +97,7 @@ public class Portfolio {
     //============>>
     // HELPERS
 
-    private double stockBalance() {
+    private double calculateStockBalance() {
         double totalValue = 0.0;
         for (Stock stock : stocks) {
             totalValue += stock.getPrice() * stock.getQty();

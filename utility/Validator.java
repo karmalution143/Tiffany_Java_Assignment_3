@@ -80,4 +80,32 @@ public class Validator {
         }
         return amount;
     }
+
+    public double withdrawalValidation(Ink ink, Scanner input, double balance) {
+        double amount = 0;
+        boolean valid = false;
+        while (!valid) {
+            ink.printWithdrawalFunds(balance);
+            try {
+                amount = input.nextDouble();
+                if (amount > 0 && amount <= balance) { // Validate that the amount is positive and within the available balance
+                    valid = true;
+                } 
+                else {
+                    if (amount <= 0) {
+                        System.out.println("Withdrawal amount must be positive");
+                    }
+                    else {
+                        System.out.println("Insufficient funds. Enter a smaller withdrawal amount");
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Please enter a valid amount.");
+                valid = false;
+            } finally {
+                input.nextLine(); // clear the input
+            }
+        }
+        return amount;
+    }
 } // class

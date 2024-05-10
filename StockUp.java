@@ -13,7 +13,7 @@ public class StockUp {
     private static Portfolio portfolio;
 
     private static int min = 1;
-    private static int max = 5;
+    private static int max = 6;
     private static boolean isDone = false;
     private static boolean goBack = false;
 
@@ -26,11 +26,12 @@ public class StockUp {
         double initialDeposit = validator.depositValidation(ink, input);
         portfolio = new Portfolio(initialDeposit);
         ink.printInitialDeposit(initialDeposit);
-        //ink.printBalances(portfolio.getNetworth(), portfolio.getCashBalance(), portfolio.getStockBalance());
-
+        
         seedStocks();
         portfolio.updateStockBalance();
         seedMarket();
+
+        ink.printBalances(portfolio.getNetworth(), portfolio.getCashBalance(), portfolio.getStockBalance());
 
         while(!isDone) { // can also say while(isDone == false)
             int choice = validator.selValidation(ink, input, min, max); // pass in the opjects ink, input etc
@@ -84,12 +85,21 @@ public class StockUp {
                     break;
                     
                 case 4: // add funds
-                    double amount = validator.fundValidation(ink, input, choice);
+                    double amount = validator.fundValidation(ink, input, portfolio.getCashBalance());
                     portfolio.addFunds(amount);
                     // print the new balance
                     System.out.printf("New Balance: $%.2f\n", portfolio.getCashBalance());
                     break;
-                case 5:
+
+                case 5: // withdrawal funds
+                    amount = validator.withdrawalValidation(ink, input, portfolio.getCashBalance());
+                    ink.printWithdrawalFunds(portfolio.getCashBalance());
+                    portfolio.withdrawFunds(amount);
+                    // print the new balance
+                    System.out.printf("New Balance: $%.2f\n", portfolio.getCashBalance());
+                    break;
+                
+                case 6:
                     isDone = !isDone;
                     break;
                 default:
